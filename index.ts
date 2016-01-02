@@ -14,8 +14,10 @@ var app: Express.Express = Express();
 
 import route_auth = require('./routes/authorize');
 import route_states = require('./routes/states');
+import route_check = require('./routes/checkToken');
 
-route_auth.configure(app, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET);
 route_states.configure(app);
+route_auth.configure(app, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET);
+route_check.configure(app, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET);
 
 app.listen(process.env.PORT || 80);
