@@ -12,29 +12,45 @@ class StateResource {
 	
 	private states: { [key: string]: number };
 	
+	private interval: any = null;
+	
 	public constructor() {
 		this.states = {};
+	};
+	
+	private manageInterval(): void {
 		const timeoutMillis = 60 * 10 * 1000;
-		
-		setInterval(() => {
-			var now = +new Date, keys = Object.keys(this.states);
-			for (let i = 0; i < keys.length; i++) {
-				if ((this.states[keys[i]] + timeoutMillis) < now) {
-					delete this.states[keys[i]];
-				}
+
+		if (Object.keys(this.states).length === 0) {
+			if (this.interval !== null) {
+				clearInterval(this.interval);
+				this.interval = null;
 			}
-		}, 30000);
+		} else {
+			if (this.interval === null) {
+				this.interval = setInterval(() => {
+					var now = +new Date, keys = Object.keys(this.states);
+					for (let i = 0; i < keys.length; i++) {
+						if ((this.states[keys[i]] + timeoutMillis) < now) {
+							delete this.states[keys[i]];
+						}
+					}
+				}, 30000);
+			}
+		}
 	};
 	
 	public getState(): string {
 		var id = UUID.v4();
 		this.states[id] = +new Date;
+		this.manageInterval();
 		return id;
 	};
 	
 	public validateState(state: string): boolean {
 		if (this.states.hasOwnProperty(state)) {
 			delete this.states[state];
+			this.manageInterval();
 			return true;
 		}
 		return false;
