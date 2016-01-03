@@ -1,6 +1,6 @@
 {
   "name": "stab-comments-authorizer",
-  "version": "1.1.2",
+  "version": "1.2.2",
   "description": "This application is used as OAuth authorization callback for Stab-based blogs that use the Github-comment module.",
   "main": "index.js",
   "engines": {
