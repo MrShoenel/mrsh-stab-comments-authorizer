@@ -9,6 +9,7 @@ export function configure(expressApp: Express.Express) {
 	 * will be valid for ten minutes.
 	 */
 	expressApp.get('/state', (req: Express.Request, res: Express.Response) => {
+		res.type('text/plain');
 		res.end(StateResource.getState());
 	});
 };

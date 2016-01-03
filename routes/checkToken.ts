@@ -20,6 +20,8 @@ export function configure(expressApp: Express.Express, clientId: string, clientS
 				}
 			};
 		
+		res.type('text/plain');
+		
 		ReqProm(rqpOptions).then(json => {
 			// check all scopes:
 			for (var i = 0; i < scopes.length; i++) {
