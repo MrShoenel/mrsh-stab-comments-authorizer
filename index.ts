@@ -12,10 +12,12 @@ if (OAUTH_CLIENT_ID === null || OAUTH_CLIENT_SECRET === null) {
 
 var app: Express.Express = Express();
 
+import mware_cors = require('./middlewares/CORS');
 import route_auth = require('./routes/authorize');
 import route_states = require('./routes/states');
 import route_check = require('./routes/checkToken');
 
+mware_cors.configure(app);
 route_states.configure(app);
 route_auth.configure(app, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET);
 route_check.configure(app, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET);
